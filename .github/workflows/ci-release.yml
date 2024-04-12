@@ -15,7 +15,7 @@ permissions:
 
 jobs:
   publish-release:
-    if: github.repository == 'jaegertracing/jaeger'
+    #if: github.repository == 'jaegertracing/jaeger'
     runs-on: ubuntu-latest
 
     steps:
@@ -61,12 +61,12 @@ jobs:
     - name: Install tools
       run: make install-ci
 
-    - name: Configure GPG Key
-      id: import_gpg
-      uses: crazy-max/ghaction-import-gpg@01dd5d3ca463c7f10f7f4f7b4f177225ac661ee4 # v6.1.0
-      with:
-        gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-        passphrase: ${{ secrets.GPG_PASSPHRASE }}
+    #- name: Configure GPG Key
+    #  id: import_gpg
+    #  uses: crazy-max/ghaction-import-gpg@01dd5d3ca463c7f10f7f4f7b4f177225ac661ee4 # v6.1.0
+    #  with:
+    #    gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+    #    passphrase: ${{ secrets.GPG_PASSPHRASE }}
 
     - name: Build binaries
       run: make build-all-platforms
@@ -92,23 +92,23 @@ jobs:
 
     - uses: docker/setup-qemu-action@68827325e0b33c7199eb31dd4e31fbe9023e06e3 # v3.0.0
 
-    - name: Build and upload all docker images
-      run: bash scripts/build-upload-docker-images.sh
-      env:
-        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-        QUAY_TOKEN: ${{ secrets.QUAY_TOKEN }}
+    #- name: Build and upload all docker images
+    #  run: bash scripts/build-upload-docker-images.sh
+    #  env:
+    #    DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    #    QUAY_TOKEN: ${{ secrets.QUAY_TOKEN }}
 
-    - name: Build, test, and publish all-in-one image
-      run: bash scripts/build-all-in-one-image.sh
-      env:
-        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-        QUAY_TOKEN: ${{ secrets.QUAY_TOKEN }}
+    #- name: Build, test, and publish all-in-one image
+    #  run: bash scripts/build-all-in-one-image.sh
+    #  env:
+    #    DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    #    QUAY_TOKEN: ${{ secrets.QUAY_TOKEN }}
 
-    - name: Build, test, and publish hotrod image
-      run: bash scripts/hotrod-integration-test.sh
-      env:
-        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-        QUAY_TOKEN: ${{ secrets.QUAY_TOKEN }}
+    #- name: Build, test, and publish hotrod image
+    #  run: bash scripts/hotrod-integration-test.sh
+    #  env:
+    #    DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    #    QUAY_TOKEN: ${{ secrets.QUAY_TOKEN }}
 
     - name: Generate SBOM
       uses: anchore/sbom-action@ab5d7b5f48981941c4c5d6bf33aeb98fe3bae38c # v0.15.10
